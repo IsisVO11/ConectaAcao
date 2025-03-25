@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -87,7 +88,6 @@ dependencies {
     
     // ML Kit
     implementation("com.google.mlkit:text-recognition:16.0.0")
-    implementation("com.google.android.gms:play-services-tts:19.0.0")
     
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
