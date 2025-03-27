@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "490628391435",
+    "project_id": "conectaacao-c4024",
+    "storage_bucket": "conectaacao-c4024.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490628391435:android:6857cf2ac24ee5cf091d0e",
+        "android_client_info": {
+          "package_name": "com.example.conectaao"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGh3q0lOjO3WJFp_ZqVRvStGpSiKNTBPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
