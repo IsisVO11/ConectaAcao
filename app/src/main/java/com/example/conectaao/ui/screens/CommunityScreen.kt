@@ -8,7 +8,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.conectaao.viewmodel.CommunityViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun CommunityScreen(
@@ -16,6 +18,7 @@ fun CommunityScreen(
 ) {
     val posts by viewModel.posts.collectAsState()
     var newPostText by remember { mutableStateOf("") }
+    val currentUser = FirebaseAuth.getInstance().currentUser
     
     Column(
         modifier = Modifier
@@ -72,11 +75,16 @@ fun CommunityScreen(
         
         Button(
             onClick = { 
-                viewModel.createPost(newPostText)
-                newPostText = ""
+                currentUser?.let { user ->
+                    viewModel.createPost(
+                        content = newPostText,
+                        authorName = user.displayName ?: "Usuário Anônimo"
+                    )
+                    newPostText = ""
+                }
             },
             modifier = Modifier.align(Alignment.End),
-            enabled = newPostText.isNotEmpty()
+            enabled = newPostText.isNotEmpty() && currentUser != null
         ) {
             Text("Publicar")
         }
