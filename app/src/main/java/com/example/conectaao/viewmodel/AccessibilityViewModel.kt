@@ -28,4 +28,8 @@ class AccessibilityViewModel : ViewModel() {
             _isSpeaking.value = false
         }
     }
-} 
+}
+
+open class ViewModel {
+
+}
