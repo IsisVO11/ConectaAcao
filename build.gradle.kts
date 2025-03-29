@@ -2,7 +2,6 @@
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
 }
 
 buildscript {
@@ -11,8 +10,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        classpath("com.android.tools.build:gradle:8.2.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
         classpath("com.google.gms:google-services:4.4.1")
-        classpath("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.9.0-1.0.11")
     }
+}
 
+// Tarefas comuns
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
 }

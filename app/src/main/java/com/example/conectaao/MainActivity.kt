@@ -21,6 +21,9 @@ import com.example.conectaao.ui.screens.*
 import com.example.conectaao.ui.theme.ConectaAçãoTheme
 import com.example.conectaao.ui.screens.VolunteersScreen
 import com.example.conectaao.ui.screens.ProfileScreen
+import com.example.conectaao.ui.screens.MapScreen
+import com.example.conectaao.ui.screens.CommunityScreen
+import com.example.conectaao.ui.screens.LoginScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

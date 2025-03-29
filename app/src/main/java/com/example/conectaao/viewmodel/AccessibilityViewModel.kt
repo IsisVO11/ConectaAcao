@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 class AccessibilityViewModel : ViewModel() {
     private val _recognizedText = MutableStateFlow("")
@@ -24,12 +25,8 @@ class AccessibilityViewModel : ViewModel() {
         viewModelScope.launch {
             _isSpeaking.value = true
             // Simulação de conversão de texto para fala
-            kotlinx.coroutines.delay(2000) // Simula o tempo de fala
+            delay(2000) // Simula o tempo de fala
             _isSpeaking.value = false
         }
     }
-}
-
-open class ViewModel {
-
 }
