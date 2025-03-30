@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">ConectaAção</string>
+    <string name="app_name">ConectaAo</string>
+    <string name="map">Mapa</string>
+    <string name="volunteers">Voluntários</string>
+    <string name="community">Comunidade</string>
+    <string name="profile">Perfil</string>
 </resources>

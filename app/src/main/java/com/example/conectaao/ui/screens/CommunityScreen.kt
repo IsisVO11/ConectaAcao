@@ -1,92 +1,98 @@
 package com.example.conectaao.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.conectaao.viewmodel.CommunityViewModel
-import com.google.firebase.auth.FirebaseAuth
+import androidx.navigation.NavController
+import com.example.conectaao.data.SampleData
+import com.example.conectaao.ui.components.PostItem
+import com.example.conectaao.ui.theme.BlueStart
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CommunityScreen(
-    viewModel: CommunityViewModel = viewModel()
-) {
-    val posts by viewModel.posts.collectAsState()
-    var newPostText by remember { mutableStateOf("") }
-    val currentUser = FirebaseAuth.getInstance().currentUser
-    
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        // Lista de posts
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            items(posts) { post ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(
-                            text = post.authorName,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(post.content)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            TextButton(onClick = { viewModel.likePost(post.id) }) {
-                                Text("${post.likes} Curtidas")
-                            }
-                            TextButton(onClick = { /* TODO: Implementar comentários */ }) {
-                                Text("${post.comments.size} Comentários")
-                            }
-                        }
-                    }
-                }
+fun CommunityScreen(navController: NavController) {
+    // Scaffold para a estrutura básica da tela
+    Scaffold(
+        topBar = {
+            // TopAppBar personalizada
+            TopAppBar(
+                title = { 
+                    Text(
+                        text = "Comunidade", 
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = BlueStart
+                )
+            )
+        },
+        floatingActionButton = {
+            // FAB para criar novo post
+            FloatingActionButton(
+                onClick = { 
+                    // Navegar para a tela de criação de post
+                    navController.navigate("create_post")
+                },
+                containerColor = BlueStart,
+                contentColor = Color.White
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Criar Post"
+                )
             }
         }
-        
-        // Campo para novo post
-        OutlinedTextField(
-            value = newPostText,
-            onValueChange = { newPostText = it },
-            label = { Text("Compartilhe algo...") },
+    ) { innerPadding ->
+        // Conteúdo principal - lista de posts
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        )
-        
-        Button(
-            onClick = { 
-                currentUser?.let { user ->
-                    viewModel.createPost(
-                        content = newPostText,
-                        authorName = user.displayName ?: "Usuário Anônimo"
-                    )
-                    newPostText = ""
-                }
-            },
-            modifier = Modifier.align(Alignment.End),
-            enabled = newPostText.isNotEmpty() && currentUser != null
+                .fillMaxSize()
+                .padding(innerPadding)
         ) {
-            Text("Publicar")
+            items(SampleData.posts) { post ->
+                PostItem(
+                    post = post,
+                    onPostClick = { 
+                        // Navegar para a tela de detalhes do post
+                        navController.navigate("post_detail/${post.id}")
+                    },
+                    onCommentClick = {
+                        // Navegar para a tela de comentários
+                        navController.navigate("comments/${post.id}")
+                    },
+                    onLikeClick = { 
+                        // Implementar funcionalidade de curtir post 
+                    }
+                )
+                
+                // Separador entre os posts
+                if (post != SampleData.posts.last()) {
+                    Divider(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        color = Color.LightGray
+                    )
+                }
+            }
+            
+            // Adicionar espaço no final para o FAB não cobrir o último item
+            item {
+                Spacer(modifier = Modifier.height(80.dp))
+            }
         }
     }
 } 

@@ -56,5 +56,6 @@ class NotificationService : FirebaseMessagingService() {
     
     private fun sendRegistrationToServer(token: String) {
         // TODO: Implementar envio do token para o servidor
+        // O token será utilizado quando a implementação for concluída
     }
 } 

@@ -25,6 +25,8 @@ class AccessibilityViewModel : ViewModel() {
         viewModelScope.launch {
             _isSpeaking.value = true
             // Simulação de conversão de texto para fala
+            // O parâmetro text será utilizado na implementação real do TTS
+            _recognizedText.value = text // Armazenar o texto para referência
             delay(2000) // Simula o tempo de fala
             _isSpeaking.value = false
         }
